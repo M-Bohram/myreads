@@ -10,12 +10,17 @@ class Search extends Component {
     books: [],
   };
 
+  clearWhitespace = (inputText) => {
+    let clearedText = inputText.replace(/^\s+/, "");
+    this.setState({ query: clearedText });
+  };
+
   handleChange = (e) => {
-    const searchValue = e.target.value;
+    let searchValue = e.target.value;
+    this.clearWhitespace(searchValue);
     if (searchValue) {
       this.setState({ query: searchValue });
       BooksAPI.search(searchValue).then((res) => {
-        console.log("search results", res);
         if (res.error) {
           return this.setState({
             books: [],
