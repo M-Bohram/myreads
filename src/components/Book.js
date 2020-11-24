@@ -1,25 +1,25 @@
 import React, { Component } from "react";
 import _ from "lodash";
-import * as BookAPI from "../BooksAPI";
+// import * as BookAPI from "../BooksAPI";
 
 class Book extends Component {
-  state = {
-    book: {},
-  };
+  // state = {
+  //   book: {},
+  // };
 
   changeBookShelf = (e) => {
     let category = e.target.value;
-    this.props.onChangeBookShelf(this.state.book.id, category);
+    this.props.onChangeBookShelf(this.props.book.id, category);
   };
 
-  componentDidMount() {
-    BookAPI.get(this.props.bookId).then((receivedBook) =>
-      this.setState({ book: receivedBook })
-    );
-  }
+  // componentDidMount() {
+  //   BookAPI.get(this.props.book.id).then((receivedBook) =>
+  //     this.setState({ book: receivedBook })
+  //   );
+  // }
 
   render() {
-    const { book } = this.state;
+    const { book } = this.props;
     const defaultCoverImage =
       "https://cdn141.picsart.com/311796011013201.jpg?type=webp&to=crop&r=256";
     return (

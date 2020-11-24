@@ -26,8 +26,10 @@ class Search extends Component {
             books: [],
           });
         } else if (res) {
+          console.log(res);
+          const books = res;
           this.setState({
-            books: res.map((book) => book.id),
+            books: books,
           });
         }
       });
@@ -65,9 +67,9 @@ class Search extends Component {
               <li>Sorry, No Books found!</li>
             ) : (
               this.state.books.map((book) => (
-                <li key={book}>
+                <li key={book.id}>
                   <Book
-                    bookId={book}
+                    book={book}
                     category="None"
                     onChangeBookShelf={onChangeBookShelf}
                   />

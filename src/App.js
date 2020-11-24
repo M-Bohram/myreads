@@ -18,15 +18,16 @@ class BooksApp extends React.Component {
 
   getBooks = () => {
     BooksAPI.getAll().then((receivedBooks) => {
-      const currentlyReading = receivedBooks
-        .filter((book) => book.shelf === "currentlyReading")
-        .map((book) => book.id);
-      const wantToRead = receivedBooks
-        .filter((book) => book.shelf === "wantToRead")
-        .map((book) => book.id);
-      const read = receivedBooks
-        .filter((book) => book.shelf === "read")
-        .map((book) => book.id);
+      const currentlyReading = receivedBooks.filter(
+        (book) => book.shelf === "currentlyReading"
+      );
+      // .map((book) => book.id);
+      const wantToRead = receivedBooks.filter(
+        (book) => book.shelf === "wantToRead"
+      );
+      // .map((book) => book.id);
+      const read = receivedBooks.filter((book) => book.shelf === "read");
+      // .map((book) => book.id);
       this.setState({
         currentlyReading,
         wantToRead,
@@ -36,13 +37,15 @@ class BooksApp extends React.Component {
   };
 
   updateBook = async (id, shelf) => {
-    const shelves = await BooksAPI.update(id, shelf);
-    this.updateShelves(shelves);
+    // const shelves =
+    await BooksAPI.update(id, shelf);
+    this.getBooks();
+    // this.updateShelves(shelves);
   };
 
-  updateShelves = (newState) => {
-    this.setState(newState);
-  };
+  // updateShelves = (newState) => {
+  //   this.setState(newState);
+  // };
 
   changeBookShelf = async (bookId, shelf) => {
     this.updateBook(bookId, shelf);
