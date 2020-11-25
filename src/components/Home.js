@@ -3,15 +3,13 @@ import BookShelf from "./BookShelf";
 import { Link } from "react-router-dom";
 
 class Home extends Component {
-  render() {
-    const {
-      onChangeBookShelf,
-      currentlyReading,
-      wantToRead,
-      read,
-    } = this.props;
-
-    const shelves = [
+  getShelvesFromBooks = (books) => {
+    const currentlyReading = books.filter(
+      (book) => book.shelf === "currentlyReading"
+    );
+    const wantToRead = books.filter((book) => book.shelf === "wantToRead");
+    const read = books.filter((book) => book.shelf === "read");
+    return [
       {
         id: 1,
         title: "Currently Reading",
@@ -28,25 +26,30 @@ class Home extends Component {
         books: read,
       },
     ];
+  };
+
+  render() {
+    const shelves = this.getShelvesFromBooks(this.props.books);
+    const { onChangeBookShelf } = this.props;
+
     return (
       <div className="list-books">
         <div className="list-books-title">
           <h1>MyReads</h1>
         </div>
         <div className="list-books-content">
-          {shelves.map((shelf) => (
-            <BookShelf
-              key={shelf.id}
-              books={shelf.books}
-              shelfTitle={shelf.title}
-              onChangeBookShelf={onChangeBookShelf}
-            />
-          ))}
+          {shelves.length > 0 &&
+            shelves.map((shelf) => (
+              <BookShelf
+                key={shelf.id}
+                books={shelf.books}
+                shelfTitle={shelf.title}
+                onChangeBookShelf={onChangeBookShelf}
+              />
+            ))}
         </div>
         <div className="open-search">
-          <Link to="/search">
-            <button>Add a book</button>
-          </Link>
+          <Link to="/search">Add a book</Link>
         </div>
       </div>
     );
