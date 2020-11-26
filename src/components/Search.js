@@ -14,12 +14,19 @@ class Search extends Component {
   cancelRequest = null;
 
   getSearchedBooks = async (searchText) => {
-    const searchedBooks = await BooksAPI.search(searchText, this.cancelRequest);
-    if (searchedBooks.error) {
-      return [];
-    } else if (searchedBooks) {
-      const updatedBooks = this.updateShelvesInBooks(searchedBooks);
-      return updatedBooks;
+    try {
+      const searchedBooks = await BooksAPI.search(
+        searchText,
+        this.cancelRequest
+      );
+      if (searchedBooks.error) {
+        return [];
+      } else if (searchedBooks) {
+        const updatedBooks = this.updateShelvesInBooks(searchedBooks);
+        return updatedBooks;
+      }
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -38,7 +45,9 @@ class Search extends Component {
 
   cancelOrInitializeRequest = () => {
     if (this.cancelRequest !== null) {
-      this.cancelRequest.cancel();
+      this.cancelRequest.cancel(
+        "The request was cancelled due to another request after it"
+      );
     }
     this.cancelRequest = axios.CancelToken.source();
   };
@@ -50,8 +59,8 @@ class Search extends Component {
     if (searchQuery === "") {
       this.setState({ books: [] });
     } else if (searchQuery) {
-      const searchedBooks = await this.searchBooks(searchQuery);
-      if (searchedBooks.length > 0) {
+      const searchedBooks = await this.getSearchedBooks(searchQuery);
+      if (searchedBooks && searchedBooks.length > 0) {
         this.setState({ books: searchedBooks });
       } else {
         this.setState({ books: [] });
