@@ -1,6 +1,5 @@
 import React from "react";
 import _ from "lodash";
-// import * as BookAPI from "../BooksAPI";
 
 const Book = ({ book, onChangeBookShelf }) => {
   const defaultCoverImage =
@@ -8,7 +7,7 @@ const Book = ({ book, onChangeBookShelf }) => {
 
   const changeBookShelf = (e) => {
     let category = e.target.value;
-    onChangeBookShelf(this.props.book.id, category);
+    onChangeBookShelf(book.id, category);
   };
 
   return (
