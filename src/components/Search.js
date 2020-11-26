@@ -38,6 +38,7 @@ class Search extends Component {
           searchedBook.shelf = homeBook.shelf;
         }
       });
+      if (!searchedBook.shelf) searchedBook.shelf = "none";
       return searchedBook;
     });
     return updatedBooks;
